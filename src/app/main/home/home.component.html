@@ -1,0 +1,57 @@
+<ng-container>
+    <div class="grid grid-rows-[auto,1fr,auto] h-full gap-5 p-5 w-[80%] mx-auto">
+        <div>
+            <app-search></app-search>
+        </div>
+            <div>
+                <ng-container *ngIf="mainService.productSearchSubject.value === ''; else searchedProductsTemplate">
+                    <ng-container *ngIf="products | async as productsData">
+                        <div class="grid grid-cols-4 gap-5">
+                            <ng-container *ngFor="let product of productsData.products">
+                                <app-product-item [product]="product"></app-product-item>
+                            </ng-container>
+                        </div>
+                    </ng-container>
+                </ng-container>
+                <ng-template #searchedProductsTemplate>
+                    <ng-container *ngIf="serachedProducts | async as searchProductsData">
+                        <div class="grid grid-cols-4 gap-5">
+                            <ng-container *ngFor="let product of searchProductsData.products">
+                                <app-product-item [product]="product"></app-product-item>
+                            </ng-container>
+                        </div>
+                    </ng-container>
+                </ng-template>
+            </div>
+        <div>
+            <app-paganation ></app-paganation>
+        </div>
+    </div>
+</ng-container>
+
+
+<!-- <div class="grid grid-rows-[auto,1fr,auto] h-full gap-5 p-5 w-[80%] mx-auto">
+    <div>
+        <app-search></app-search>
+    </div>
+    <ng-container *ngIf="products | async as productsData; else productsLoading">
+        <div class="grid grid-cols-4 gap-5">
+            <ng-container *ngFor="let product of productsData.products">
+                <app-product-item [product]="product"></app-product-item>
+            </ng-container>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="serachedProducts | async as searchProductsData; else productsLoading">
+        <div class="grid grid-cols-4 gap-5">
+            <ng-container *ngFor="let product of searchProductsData.products">
+                <app-product-item [product]="product"></app-product-item>
+            </ng-container>
+        </div>
+    </ng-container>
+    <ng-template #productsLoading>
+        Loading...
+    </ng-template>
+    <div>
+        <app-paganation></app-paganation>
+    </div>
+</div> -->

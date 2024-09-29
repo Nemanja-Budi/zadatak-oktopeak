@@ -1,0 +1,27 @@
+<div class="grid grid-cols-[auto,1fr,auto] p-5 gap-5">
+    <figure routerLink="/home">
+        <img src="../../assets/images/{{isDark ? 'blackLogo.png' : 'whiteLogo.png'}}" alt="Logo">
+    </figure>
+    <ng-container *ngIf="mainService.getAccessToken(); else isLogin">
+        <div class="flex justify-end items-center gap-5">
+            <figure (click)="toggleDropdown()" class="flex items-center gap-1.5 cursor-pointer relative">
+                <img src="../../assets/images/{{isDark ? 'userBlack.png' : 'userWhite.png'}}" alt="UserAvatar">
+                <figcaption *ngIf="user | async as userData">{{userData.firstName}}</figcaption>
+                <div *ngIf="isDropdownOpen" class="absolute top-full right-0 mt-2 w-48 bg-{{isDark ? 'black' : 'white'}} text-{{isDark ? 'white' : 'black'}} shadow-lg rounded-lg">
+                  <ul>
+                    <li class="p-2 hover:bg-gray-200 hover:rounded-lg">
+                      <a routerLink="/profile">Profile</a>
+                    </li>
+                    <li class="p-2 hover:bg-gray-200 hover:rounded-lg cursor-pointer" (click)="logout()">Logout</li>
+                  </ul>
+                </div>
+              </figure>
+            <button class="flex justify-end items-center" (click)="logout()">Log out</button>
+        </div>
+    </ng-container>
+    <ng-template #isLogin>
+        <button class="flex justify-end items-center" routerLink="/login">Log in</button>
+    </ng-template>
+    <button (click)="toggle()">{{isDark ? 'Dark': 'Light'}}</button>
+</div>
+

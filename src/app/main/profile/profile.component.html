@@ -1,0 +1,16 @@
+<ng-container *ngIf="user | async as userData">
+    <div class="grid grid-rows-[auto,1fr] h-full">
+        <h2 class="p-5 text-2xl text-center">About User</h2>
+        <div class="w-[60%] mx-auto flex flex-col justify-center h-full">
+            <div class="border pt-0 p-5 rounded-md shadow">
+                <figure class="flex justify-center">
+                    <img [src]="userData.image" alt="User Image">
+                </figure>
+                <p class="flex justify-between"><strong>User name:</strong> {{userData.username | titlecase}}</p>
+                <p class="flex justify-between"><strong>First name:</strong> {{userData.firstName | titlecase}}</p>
+                <p class="flex justify-between"><strong>Last name:</strong> {{userData.lastName | titlecase}}</p>
+                <p class="flex justify-between"><strong>Email:</strong> {{userData.email | titlecase}}</p>
+            </div>
+        </div>
+    </div>
+</ng-container>

@@ -1,0 +1,7 @@
+<div routerLink="/product-detail/{{product.id}}" *ngIf="product" class="border p-2 rounded-md">
+    <figure *ngFor="let image of product.images | slice:0:1" class="h-40 flex justify-center">
+        <img [src]="image" alt="User Image">
+    </figure>
+    <p class="flex justify-between"><strong>Title:</strong>{{product.title}}</p>
+    <p class="flex justify-between"><strong>Price:</strong>{{product.price | currency}}</p>
+</div>

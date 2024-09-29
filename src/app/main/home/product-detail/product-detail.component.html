@@ -1,0 +1,20 @@
+<div class="grid grid-rows-[auto,1fr] h-fit p-5 gap-5">
+    <button routerLink="/home" class="flex border w-fit px-6 py-2 rounded-md">All products</button>
+    <div class="h-full  w-[50%] mx-auto flex justify-center items-center">
+        <div *ngIf="product | async as productData" class="p-2 border rounded-md">
+            <figure *ngFor="let image of productData.images | slice:0:1" class="h-80 flex justify-center">
+                <img [src]="image" alt="User Image">
+            </figure>
+            <div>
+                <p class="flex justify-between"><strong>Title:</strong>{{productData.title}}</p>
+                <p class="flex justify-between"><strong>Price:</strong>{{productData.price | currency}}</p>
+                <p class="flex justify-between"><strong>Rating:</strong>⭐{{productData.rating}}</p>
+                <p class="flex justify-between"><strong>Brand:</strong>{{productData.brand}}</p>
+                <p class="flex flex-col"><strong class="text-center">Description:</strong>{{productData.description}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- "title", "description", "price", "rating", "brand". Potrebno je staviti dugme back,
+i na klik vodi na prethodnu stranu (listu proizvoda). -->
