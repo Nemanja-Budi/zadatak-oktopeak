@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { MainService } from '../main/main.service';
 import { Observable } from 'rxjs';
 import { User } from '../models/user.model';
@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent {
+export class NavbarComponent implements OnInit {
 
   mainService: MainService = inject(MainService);
   accountService: AccountService = inject(AccountService);
@@ -29,8 +29,15 @@ export class NavbarComponent {
     this.router.navigate(['/login']);
   }
 
-  toggle(): void {
+  toggleMode(): void {
     this.isDark = !this.isDark;
-    this.mainService.isDark.next(this.isDark);
+    this.mainService.setAndUpdateMode(this.isDark);
+  }
+
+  ngOnInit(): void {
+    const mode = this.mainService.getMode();
+    if(mode) {
+      this.isDark = mode == 'Dark' ? true : false;
+    }
   }
 }

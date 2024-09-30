@@ -30,7 +30,6 @@ export class AccountService {
   logout(): void {
     localStorage.removeItem('AccessToken');
     localStorage.removeItem('RefreshToken');
-    // this.router.navigate(['login']);
   }
 
   refreshToken(): Observable<any> {
@@ -41,8 +40,6 @@ export class AccountService {
         expiresInMins: 1
       }).pipe(
         tap(response => {
-          // Sačuvaj nove tokene
-          console.log('pozivam se');
           localStorage.setItem('AccessToken', response.accessToken);
           localStorage.setItem('RefreshToken', response.refreshToken);
         })
@@ -55,13 +52,8 @@ export class AccountService {
     return localStorage.getItem('RefreshToken');
   }
 
-
   getAccessToken(): string | null {
     return localStorage.getItem('AccessToken');
-  }
-
-  isAuthenticated(): boolean {
-    return !!this.getAccessToken();
   }
 
 }

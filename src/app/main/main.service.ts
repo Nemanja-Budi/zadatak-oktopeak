@@ -1,19 +1,14 @@
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
-import { BehaviorSubject, map, Observable, of, switchMap, tap, throwError } from 'rxjs';
-import { User } from '../models/user.model';
-import { Router } from '@angular/router';
-import { Login } from '../models/login.model';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, combineLatest, map, Observable, switchMap } from 'rxjs';
 import { ProductsResponse } from '../models/product-response.model';
 import { getDefaultPagination, PaginationType } from '../shared/types/pagination.type';
 import { Product } from '../models/product.model';
-
 
 @Injectable({
   providedIn: 'root'
 })
 export class MainService {
-
   
   pagination: PaginationType = getDefaultPagination();
 
@@ -21,8 +16,6 @@ export class MainService {
   productSearchSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
   totalPages: BehaviorSubject<number> = new BehaviorSubject<number>(0);
   isDark: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-
-  router: Router = inject(Router);
 
   constructor(private http: HttpClient) { }
 
@@ -35,9 +28,28 @@ export class MainService {
           httpParams = httpParams.append(key, value);
         });        
         return this.http.get<ProductsResponse>(`https://dummyjson.com/products`, { params: httpParams }).pipe(map((products) => {
-          this.totalPages.next(Math.ceil(products.total/12));
+          this.totalPages.next(Math.ceil(products.total / 12));
           return products;
         }))
+      })
+    );
+  }
+
+  searchProducts(): Observable<ProductsResponse> {
+    return combineLatest([this.productSearchSubject, this.productPaginationSubject]).pipe(
+      switchMap(([searchParams, paginationParams]) => {
+        const options = {
+          params: new HttpParams()
+            .set('q', searchParams || '')
+            .set('limit', paginationParams.limit)
+            .set('skip', paginationParams.skip)
+        };
+        return this.http.get<ProductsResponse>(`https://dummyjson.com/products/search`, options).pipe(
+          map((products) => {
+            this.totalPages.next(Math.ceil(products.total / 12));
+            return products;
+          })
+        );
       })
     );
   }
@@ -45,21 +57,16 @@ export class MainService {
   getProduct(id: number): Observable<Product> {
     return this.http.get<Product>(`https://dummyjson.com/products/${id}`);
   }
-
-  searchProducts(): Observable<ProductsResponse> {
-    return this.productSearchSubject.pipe(
-      switchMap(params => {
-        const options = {
-          params: new HttpParams()
-            .set('q', params || '')
-          };
-        return this.http.get<ProductsResponse>(`https://dummyjson.com/products/search`, options).pipe(map((products) => {
-          this.totalPages.next(Math.ceil(products.total/12));
-          return products;
-        }));
-      })
-    );
-  }
   
+  setAndUpdateMode(isDark: boolean): void {
+    let mode = isDark == true ? 'Dark' : 'Light'
+    this.isDark.next(isDark);
+    localStorage.setItem('Mode', mode);
+  }
+
+  getMode(): string | null {
+    return localStorage.getItem('Mode');
+  }
+
 }
 

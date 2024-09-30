@@ -1,38 +1,37 @@
 <div class="flex justify-center items-center h-full">
-    <figure class="w-[25%] mx-auto p-6  border border-black rounded-md" [ngClass]="{'border-white' : mainService.isDark.value}">
-        <legend class="text-lg font-semibold text-center mb-4">Login</legend>
-        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-4">
-          <div>
-            <label for="username" class="block ">Username</label>
-            <input
-              id="username"
-              type="text"
-              formControlName="username"
-              class="w-full mt-1 p-2 border border-gray-300 rounded-md"
-              [ngClass]="{'border-red-500': username?.invalid && (username?.touched || username?.dirty)}"/>
-            <div *ngIf="username?.invalid && (username?.touched || username?.dirty)" class="text-red-500 text-sm">
-              Username is required.
-            </div>
-          </div>
-          <div>
-            <label for="password" class="block">Password</label>
-            <input
-              id="password"
-              type="password"
-              formControlName="password"
-              class="w-full mt-1 p-2 border border-gray-300 rounded-md"
-              [ngClass]="{'border-red-500': password?.invalid && (password?.touched || password?.dirty)}"/>
-            <div *ngIf="password?.invalid && (password?.touched || password?.dirty)" class="text-red-500 text-sm">
-              Password is required and must be at least 6 characters long.
-            </div>
-          </div>
-          <button
-            type="submit"
-            class="w-full bg-blue-600 hover:bg-blue-600 text-white font-semibold p-2 rounded-md"
-            [disabled]="loginForm.invalid">
-            Login
-          </button>
-        </form>
-      </figure>
-      
+  <figure class="w-[80%] md:w-[45%] lg:w-[35%] xl:w-[25%] mx-auto p-6  border rounded-md">
+    <legend class="text-lg font-semibold text-center mb-4">Login</legend>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-4">
+      <div>
+        <label for="username" class="block ">Username</label>
+        <input
+          id="username"
+          type="text"
+          formControlName="username"
+          class="w-full mt-1 p-2 border border-gray-300 rounded-md bg-transparent"
+          [ngClass]="{'border-red-500': username?.invalid && (username?.touched || username?.dirty)}"/>
+        <div *ngIf="username?.invalid && (username?.touched || username?.dirty)" class="text-red-500 text-sm">
+          Username is required.
+        </div>
+      </div>
+      <div>
+        <label for="password" class="block">Password</label>
+        <input
+          id="password"
+          type="password"
+          formControlName="password"
+          class="w-full mt-1 p-2 border border-gray-300 rounded-md bg-transparent"
+          [ngClass]="{'border-red-500': password?.invalid && (password?.touched || password?.dirty)}"/>
+        <div *ngIf="password?.invalid && (password?.touched || password?.dirty)" class="text-red-500 text-sm">
+          Password is required and must be at least 6 characters long.
+        </div>
+      </div>
+      <button
+        type="submit"
+        class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold p-2 rounded-md"
+        [disabled]="loginForm.invalid">
+        Login
+      </button>
+    </form>
+  </figure>
 </div>

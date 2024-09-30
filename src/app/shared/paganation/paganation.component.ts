@@ -1,4 +1,4 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MainService } from 'src/app/main/main.service';
 import { PaginationType } from '../types/pagination.type';
 
@@ -12,7 +12,6 @@ export class PaganationComponent {
   mainService: MainService = inject(MainService);
   currentSkip: number = 0;
   maxPage: number = 1;
-  // @Input({required: true}) productsTotal: number = 0;
 
   previous(): void {
     const currentSkipValue: PaginationType = { ...this.mainService.productPaginationSubject.value }
@@ -33,5 +32,10 @@ export class PaganationComponent {
       skip: this.currentSkip
     });
     console.log(this.currentSkip);
+  }
+
+  get isNextButtonDisabled(): boolean {
+    const totalPages = this.mainService.totalPages.value - 1;
+    return totalPages !== this.maxPage && totalPages !== 0 && totalPages > 0;
   }
 }

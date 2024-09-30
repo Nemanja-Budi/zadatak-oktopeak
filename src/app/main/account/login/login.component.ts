@@ -11,7 +11,6 @@ import { MainService } from '../../main.service';
 })
 export class LoginComponent implements OnInit {
 
-  mainService: MainService = inject(MainService);
   accountService: AccountService = inject(AccountService);
 
   router: Router = inject(Router);
@@ -33,18 +32,16 @@ export class LoginComponent implements OnInit {
       const password = this.loginForm.value['password'];
       this.accountService.login(userName, password).subscribe({
         next: (response) => {
-          console.log(response)
           this.router.navigate(['/home']);
         },
         error: (error) => console.error(error)
       });
   }
 
-
   ngOnInit(): void {
     const token = this.accountService.getAccessToken();
     if(token) {
-      this.router.navigate(['home']);
+      this.router.navigate(['/home']);
     }
   }
 

@@ -1,4 +1,4 @@
-<div routerLink="/product-detail/{{product.id}}" *ngIf="product" class="border p-2 rounded-md">
+<div routerLink="/product-detail/{{product.id}}" *ngIf="product" class="border p-2 rounded-md hover:cursor-pointer  hover:shadow hover:scale-105 group transition-all duration-700 ease-in-out">
     <figure *ngFor="let image of product.images | slice:0:1" class="h-40 flex justify-center">
         <img [src]="image" alt="User Image">
     </figure>

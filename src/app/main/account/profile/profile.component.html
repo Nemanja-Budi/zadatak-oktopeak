@@ -1,10 +1,10 @@
-<ng-container *ngIf="user | async as userData">
-    <div class="grid grid-rows-[auto,1fr] h-full">
+<ng-container *ngIf="user | async as userData; else loading">
+    <div class="grid grid-rows-[auto,1fr] h-full transition-all duration-700 ease-in-out">
         <h2 class="p-5 text-2xl text-center">About User</h2>
-        <div class="w-[60%] mx-auto flex flex-col justify-center h-full">
+        <div class="w-[95%] md:w-[70%] lg:w-[60%] mx-auto flex flex-col p-5 text-lg h-full">
             <div class="border pt-0 p-5 rounded-md shadow">
                 <figure class="flex justify-center">
-                    <img [src]="userData.image" alt="User Image">
+                    <img class="hover:scale-105 transition-all duration-700 ease-in-out" [src]="userData.image" alt="User Image">
                 </figure>
                 <p class="flex justify-between"><strong>User name:</strong> {{userData.username | titlecase}}</p>
                 <p class="flex justify-between"><strong>First name:</strong> {{userData.firstName | titlecase}}</p>
@@ -14,3 +14,6 @@
         </div>
     </div>
 </ng-container>
+<ng-template #loading>
+    <p class="flex justify-center items-center h-full">Loading...</p>
+</ng-template>

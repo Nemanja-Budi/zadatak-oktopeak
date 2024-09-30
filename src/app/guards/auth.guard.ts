@@ -28,7 +28,7 @@ export class AuthGuard {
     if(token) {
       return  of(true);
     } else {
-      this.router.navigate(['login']);
+      this.router.navigate(['/login']);
       return of(false);
     }
   }

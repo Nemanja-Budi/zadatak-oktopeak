@@ -1,4 +1,9 @@
 <div class="flex justify-center items-center gap-5">
-    <button  *ngIf="currentSkip !== 0" (click)="previous()">Prev</button>
-    <button *ngIf="mainService.totalPages.value-1 != maxPage" (click)="next()">Next</button>
+    <button [disabled]="currentSkip === 0" class="border aspect-square rounded-md w-9"  (click)="previous()">
+        <img src="../../../assets/images/{{mainService.isDark.value ? 'leftWhite.png': 'leftBlack.png'}}" alt="Prev">
+    </button>
+    <p class="border aspect-square w-9 rounded-md flex items-center justify-center">{{(currentSkip / 12) + 1}}</p>
+    <button [disabled]="!isNextButtonDisabled"  class="border aspect-square w-9 rounded-md"  (click)="next()">
+        <img src="../../../assets/images/{{mainService.isDark.value ? 'rightWhite.png': 'rightBlack.png'}}" alt="Next">
+    </button>
 </div>
