@@ -4,6 +4,7 @@ import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/ro
 import { Observable, map, of } from 'rxjs';
 import { MainService } from '../main/main.service';
 import { User } from '../models/user.model';
+import { AccountService } from '../main/account/account.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ import { User } from '../models/user.model';
 
 export class AuthGuard {
 
-  mainService: MainService = inject(MainService);
+  accountService: AccountService = inject(AccountService);
   router: Router = inject(Router);
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
@@ -23,7 +24,7 @@ export class AuthGuard {
   }
 
   private tokenExist(state: RouterStateSnapshot): Observable<boolean> {
-    const token = this.mainService.getAccessToken();
+    const token = this.accountService.getAccessToken();
     if(token) {
       return  of(true);
     } else {

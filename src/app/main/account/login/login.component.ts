@@ -1,9 +1,8 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { take, switchMap, EMPTY, map, concatMap } from 'rxjs';
-import { MainService } from '../main.service';
-import { Login } from 'src/app/models/login.model';
+import { Router } from '@angular/router';
+import { AccountService } from '../account.service';
+import { MainService } from '../../main.service';
 
 @Component({
   selector: 'app-login',
@@ -13,6 +12,8 @@ import { Login } from 'src/app/models/login.model';
 export class LoginComponent implements OnInit {
 
   mainService: MainService = inject(MainService);
+  accountService: AccountService = inject(AccountService);
+
   router: Router = inject(Router);
   loginForm: FormGroup;
 
@@ -30,7 +31,7 @@ export class LoginComponent implements OnInit {
     if (!this.loginForm.valid) return;
       const userName = this.loginForm.value['username'];
       const password = this.loginForm.value['password'];
-      this.mainService.login(userName, password).subscribe({
+      this.accountService.login(userName, password).subscribe({
         next: (response) => {
           console.log(response)
           this.router.navigate(['/home']);
@@ -41,7 +42,7 @@ export class LoginComponent implements OnInit {
 
 
   ngOnInit(): void {
-    const token = this.mainService.getAccessToken();
+    const token = this.accountService.getAccessToken();
     if(token) {
       this.router.navigate(['home']);
     }

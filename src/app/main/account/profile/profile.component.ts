@@ -1,7 +1,8 @@
 import { Component, inject } from '@angular/core';
-import { MainService } from '../main.service';
 import { Observable } from 'rxjs';
 import { User } from 'src/app/models/user.model';
+import { MainService } from '../../main.service';
+import { AccountService } from '../account.service';
 
 @Component({
   selector: 'app-profile',
@@ -10,6 +11,6 @@ import { User } from 'src/app/models/user.model';
 })
 export class ProfileComponent {
 
-  mainService: MainService = inject(MainService);
-  user: Observable<User> = this.mainService.getUser();
+  accountService: AccountService = inject(AccountService);
+  user: Observable<User> = this.accountService.getUser();
 }

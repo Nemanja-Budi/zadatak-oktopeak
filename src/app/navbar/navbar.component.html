@@ -2,7 +2,7 @@
     <figure routerLink="/home">
         <img src="../../assets/images/{{isDark ? 'blackLogo.png' : 'whiteLogo.png'}}" alt="Logo">
     </figure>
-    <ng-container *ngIf="mainService.getAccessToken(); else isLogin">
+    <ng-container *ngIf="accountService.getAccessToken(); else isLogin">
         <div class="flex justify-end items-center gap-5">
             <figure (click)="toggleDropdown()" class="flex items-center gap-1.5 cursor-pointer relative">
                 <img src="../../assets/images/{{isDark ? 'userBlack.png' : 'userWhite.png'}}" alt="UserAvatar">

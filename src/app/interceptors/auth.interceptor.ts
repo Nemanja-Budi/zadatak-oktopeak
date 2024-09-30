@@ -6,13 +6,13 @@ import {
   HttpInterceptor,
   HttpErrorResponse
 } from '@angular/common/http';
-import { catchError, Observable, switchMap, take, throwError } from 'rxjs';
-import { MainService } from '../main/main.service';
+import { catchError, Observable, switchMap, throwError } from 'rxjs';
+import { AccountService } from '../main/account/account.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
-  constructor(private mainService: MainService) {}
+  constructor(private accountService: AccountService) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     // Ignorišemo zahteve za refresh token
@@ -20,15 +20,15 @@ export class AuthInterceptor implements HttpInterceptor {
       return next.handle(request);
     }
   
-    const token = this.mainService.getAccessToken();
+    const token = this.accountService.getAccessToken();
     
     if (token) {
       // Proveri da li je token istekao i osveži ga ako je istekao
       if (this.isTokenExpired(token)) {
-        return this.mainService.refreshToken().pipe(
+        return this.accountService.refreshToken().pipe(
           switchMap(() => {
             // Nakon osvežavanja tokena, kloniraj zahtev sa novim tokenom
-            const newToken = this.mainService.getAccessToken();
+            const newToken = this.accountService.getAccessToken();
             const clonedRequest = request.clone({
               setHeaders: {
                 Authorization: `Bearer ${newToken}`
